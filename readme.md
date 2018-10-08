@@ -15,7 +15,7 @@ npm i august-connect
 ```
 
 Set up the following environment variables:
-- `AUGUST_API_KEY` - a valid August API key[¹](#1)
+- `AUGUST_API_KEY` - a valid August API key¹
 - `AUGUST_INSTALLID` - can be any string; suggest 
 - `AUGUST_PASSWORD` - your August password
 - `AUGUST_ID_TYPE` - `email` or `phone`
