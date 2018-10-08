@@ -15,13 +15,13 @@ npm i august-connect
 ```
 
 Set up the following environment variables:
-- `AUGUST_API_KEY` - a valid August API key – please refer notes at the bottom of this readme for more
-- `AUGUST_INSTALLID` - can be any string; suggest 
+- `AUGUST_API_KEY` - a valid August API key¹ – please refer notes at the bottom of this readme for more
+- `AUGUST_INSTALLID` - any string; suggest using something reasonably long, random, and unique; changing this will break things and require re-validation
 - `AUGUST_PASSWORD` - your August password
 - `AUGUST_ID_TYPE` - `email` or `phone`
-- `AUGUST_ID` - the corresponding account email or a phone number (phone format is `+[countrycode][number]` with no symbols, i.e. `+1234567890`)
+- `AUGUST_ID` - the corresponding account email or a phone number (phone format is `+[countrycode][number]` with no other symbols, i.e. `+12345678901`)
 
-To work with `august-connect` locally, I suggest setting up those variables with [dotenv](https://www.npmjs.com/package/dotenv).
+To work with `august-connect` locally, I suggest setting up your variables with [dotenv](https://www.npmjs.com/package/dotenv).
 
 Require `august-connect` in your project:
 ```javascript
