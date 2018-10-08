@@ -15,7 +15,7 @@ npm i august-connect
 ```
 
 Set up the following environment variables:
-- `AUGUST_API_KEY` - a valid August API key¹
+- `AUGUST_API_KEY` - a valid August API key – please refer notes at the bottom of this readme for more
 - `AUGUST_INSTALLID` - can be any string; suggest 
 - `AUGUST_PASSWORD` - your August password
 - `AUGUST_ID_TYPE` - `email` or `phone`
@@ -105,7 +105,7 @@ Big ups to [Nolan Brown](https://medium.com/@nolanbrown/august-lock-rest-apis-th
 
 
 ## Notes
-¹ This module uses August's unpublished API, and August has been known to occasionally recycle their keys. So hard-coding the August access key here isn't reliable. I suggest getting a key using [Nolan Brown's August API reverse engineering guide](https://medium.com/@nolanbrown/the-process-of-reverse-engineering-the-august-lock-api-9dbd12ab65cb) to get your key – or there's always Google!
+¹ `august-connect` uses August's unpublished API, and August has been known to occasionally recycle their client API keys. Hard-coding a August API key into `august-connect` would not reliable, so you'll need to acquire a key of your own. I suggest using [Nolan Brown's August API reverse engineering guide](https://medium.com/@nolanbrown/the-process-of-reverse-engineering-the-august-lock-api-9dbd12ab65cb) to get one – or there's always Google!
 
 - This module was tested with a 1st-generation August Smart Lock
   - If you have a 2nd or 3rd-gen Pro (or regular), I'd love to know that it works!
