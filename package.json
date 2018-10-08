@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --watch . -e js,json --exec 'npm run lint'",
-    "lint": "eslint . --ignore-pattern node_modules --fix",
+    "lint": "eslint src --ignore-pattern node_modules --fix",
     "test": "tape test/*.js | tap-spec"
   },
   "author": "Ryan Block <hello@ryanblock.com>",
