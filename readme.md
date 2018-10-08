@@ -36,26 +36,26 @@ let august = require('august-connect')
 Before you can use `august-connect`, we'll have to obtain a valid session token. This means inputting a six digit code that August will send to your `email` or `phone` ID. Here's how:
 
 - First, initiate the request for a validation code by calling: `august.validate()`
-- Then, complete your validation request by adding the six digit code (as a string) in the param: `august.validate('123456')`
-- Finally, remove `august.validate()` from your code, because you won't need it anymore
+- Then, complete your validation request by adding the six digit code (as a string) as the param: `august.validate('123456')`
+- Finally, remove `august.validate()` from your code because you won't need it anymore
 
-Now you should have a valid session! If you change your `AUGUST_INSTALLID`, or don't use this session for 120 days, you'll have to validate a new session.
+Now you should have a valid session! If you change your `AUGUST_INSTALLID`, or don't make use of this session for 120 days, you'll have to repeat this process again to validate another session.
 
 
 ### Lock methods
 
 - `august.locks(callback)` - returns object of locks your account has access to
 - `august.status([lockID][, callback])` - returns status of a single lock
-  - You can choose not to specify a `lockID` if your account only has access to a single lock
+  - If your account only has access to a single lock, you can opt not to specify a `lockID`
   - Just for reference, lock states:
     - `kAugLockState_Locked` == lock is locked
     - `kAugLockState_Unlocked` == lock is unlocked
 - `august.lock([lockID][, callback])` - lock a single lock
-  - You can choose not to specify a `lockID` if your account only has access to a single lock
-  - If your account has access multiple locks you must specify a lockID; this is to prevent locking the wrong lock
+  - If your account only has access to a single lock, you can opt not to specify a `lockID`
+  - If your account has access multiple locks, you must specify a lockID; this is to prevent locking the wrong lock, which would be not good 
 - `august.unlock([lockID][, callback])` - unlock a single lock
-  - You can choose not to specify a `lockID` if your account only has access to a single lock
-  - Same as above, your account has access multiple locks you must specify a lockID; this is to prevent unlocking the wrong lock
+  - If your account only has access to a single lock, you can opt not to specify a `lockID`
+  - Same as above, your account has access multiple locks, you must specify a lockID; this is to prevent unlocking the wrong lock, which would be not good
 
 
 ## Examples
