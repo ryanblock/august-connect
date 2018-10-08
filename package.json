@@ -1,0 +1,33 @@
+{
+  "name": "august-connect",
+  "version": "1.0.0",
+  "description": "Client module for locking + unlocking August smart locks via August Connect",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --watch . -e js,json --exec 'npm run lint'",
+    "lint": "eslint . --ignore-pattern node_modules --fix",
+    "test": "tape test/*.js | tap-spec"
+  },
+  "author": "Ryan Block <hello@ryanblock.com>",
+  "license": "Apache2",
+  "keywords": [
+    "august",
+    "smarthome",
+    "api",
+    "client"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanblock/august-connect.git"
+  },
+  "dependencies": {
+    "tiny-json-http": "^7.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^6.0.0",
+    "eslint": "^5.6.1",
+    "nodemon": "^1.18.4",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1"
+  }
+}
