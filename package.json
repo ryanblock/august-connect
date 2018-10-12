@@ -4,7 +4,7 @@
   "description": "Client module for locking + unlocking August smart locks via August Connect",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --watch . -e js,json --exec 'npm run lint'",
+    "start": "nodemon --watch . -e js,json --exec \"npm run lint\"",
     "lint": "eslint src --ignore-pattern node_modules --fix",
     "test": "tape test/*.js | tap-spec"
   },
@@ -19,6 +19,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ryanblock/august-connect.git"
+  },
+  "nodemonConfig": {
+    "events": {
+      "start": "npm run lint"
+    }
   },
   "dependencies": {
     "tiny-json-http": "^7.0.0"
