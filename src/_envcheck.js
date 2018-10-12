@@ -1,6 +1,6 @@
 module.exports = function error() {
   function error(message) {
-    throw Error(message)
+    throw ReferenceError(message)
   }
   if (!process.env.AUGUST_INSTALLID) {
     error(`Missing AUGUST_INSTALLID env var`)
