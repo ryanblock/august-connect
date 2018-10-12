@@ -48,8 +48,8 @@ Now you should have a valid session! If you change your `AUGUST_INSTALLID`, or d
 - `august.status([lockID][, callback])` - returns status of a single lock
   - If your account only has access to a single lock, you can opt not to specify a `lockID`
   - Just for reference, lock states:
-    - `kAugLockState_Locked` == lock is locked
-    - `kAugLockState_Unlocked` == lock is unlocked
+    - `status.kAugLockState_Locked` == lock is locked
+    - `status.kAugLockState_Unlocked` == lock is unlocked
 - `august.lock([lockID][, callback])` - lock a single lock
   - If your account only has access to a single lock, you can opt not to specify a `lockID`
   - If your account has access multiple locks, you must specify a lockID; this is to prevent locking the wrong lock, which would be not good 
