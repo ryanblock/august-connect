@@ -1,6 +1,6 @@
 {
   "name": "august-connect",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Client module for locking + unlocking August smart locks via August Connect",
   "main": "src/index.js",
   "scripts": {
