@@ -9,7 +9,7 @@
     "test": "tape test/*.js | tap-spec"
   },
   "author": "Ryan Block <hello@ryanblock.com>",
-  "license": "Apache2",
+  "license": "Apache-2.0",
   "keywords": [
     "august",
     "smarthome",
@@ -31,7 +31,8 @@
   "devDependencies": {
     "dotenv": "^6.0.0",
     "eslint": "^5.6.1",
-    "nodemon": "^1.18.4",
+    "jwt-simple": "^0.5.5",
+    "nodemon": "^1.18.6",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"
   }
