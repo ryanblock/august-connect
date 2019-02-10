@@ -62,32 +62,32 @@ Now you should have a valid session! If you change your `AUGUST_INSTALLID`, or d
 
 #### Lock your lock (assuming your have only one August lock on your account)
 ```javascript
-let august = require('august-connect')
+const August = require('august-connect')
 
-august.lock()
+August.lock()
 ```
 
 #### Lock a specific lock, log the results
 ```javascript
-let august = require('august-connect')
+const August = require('august-connect')
 
-august.lock('7EDFA965E0AE0CE19772AFA435364295', d=>console.log(d))
+August.lock('7EDFA965E0AE0CE19772AFA435364295', d => console.log(d))
 ```
 
 #### Unlock a specific lock
 ```javascript
-let august = require('august-connect')
+const August = require('august-connect')
 
-august.unlock('7EDFA965E0AE0CE19772AFA435364295')
+August.unlock('7EDFA965E0AE0CE19772AFA435364295')
 ```
 
 #### Check to see if your lock is locked
 ```javascript
-let august = require('august-connect')
+const August = require('august-connect')
 
-august.status('7EDFA965E0AE0CE19772AFA435364295',
+August.status('7EDFA965E0AE0CE19772AFA435364295',
   function isItLocked(lock) {
-    return (lock.status === 'kAugLockState_Locked') 
+    return lock.status === 'kAugLockState_Locked'
   }
 )
 ```

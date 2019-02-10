@@ -1,5 +1,6 @@
+// TODO uh this
 require('dotenv').config()
-let session = require('../_session')
+let session = require('../src/_session')
 let test = require('tape')
 
 test('env', t => {
