@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "dotenv": "^6.2.0",
-    "eslint": "^5.13.0",
+    "eslint": "^6.5.1",
     "jwt-simple": "^0.5.5",
     "tap-spec": "^5.0.0",
     "tape": "^4.10.0"
