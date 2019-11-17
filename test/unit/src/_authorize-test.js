@@ -21,7 +21,7 @@ test('Returns a Promise or uses continuation passing', t => {
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
-  process.env.AUGUST_ID = '1234567890'
+  process.env.AUGUST_ID = '+12345678901'
   let isPromise = authorize() instanceof Promise
   t.ok(isPromise, 'Promise returned (without params)')
   isPromise = authorize('foobar') instanceof Promise
@@ -36,7 +36,7 @@ test('Calls August endpoint with correct params (with code)', t => {
   // Uses params set in last test
   t.equal(params.url, 'https://api-production.august.com/validate/phone', 'Valid August endpoint')
   t.equal(params.data.code, 'foobar', 'Valid code')
-  t.equal(params.data.phone, '1234567890', 'Valid type + ID')
+  t.equal(params.data.phone, '+12345678901', 'Valid type + ID')
 })
 
 test('Invalid code fails', t => {
@@ -50,7 +50,7 @@ test('Calls August endpoint with correct params (without code)', t => {
   t.plan(2)
   authorize(() => {
     t.equal(params.url, 'https://api-production.august.com/validation/phone', 'Valid August endpoint')
-    t.equal(params.data.value, '1234567890', 'Valid ID')
+    t.equal(params.data.value, '+12345678901', 'Valid ID')
   })
 })
 

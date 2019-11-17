@@ -18,11 +18,11 @@ npm i august-connect
 
 Set up the following **required** configuration environment variables:
 
-- `AUGUST_API_KEY` - a valid August API key¹ – please refer notes at the bottom of this readme for more
-- `AUGUST_INSTALLID` - any string; suggest using something reasonably long, random, and unique; changing this will break things and require re-authorization
-- `AUGUST_PASSWORD` - your August password
-- `AUGUST_ID_TYPE` - `email` or `phone`
-- `AUGUST_ID` - the corresponding account email or a phone number (phone format is `+[countrycode][number]` with no other symbols, i.e. `+12345678901`)
+- `AUGUST_API_KEY` - **string** - a valid August API key¹ (please refer notes at the bottom of this readme for more)
+- `AUGUST_INSTALLID` - **string** - referred to as the `installation` below, this string represents your authorized session; changing it will break things and require re-authorization; suggest using something reasonably long, random, and unique
+- `AUGUST_PASSWORD` - **string** - your August password
+- `AUGUST_ID_TYPE` - **string** - one of `email` or `phone`
+- `AUGUST_ID` - **string** - the corresponding account email or a phone number (phone format is `+[countrycode][number]` with no other symbols, i.e. `+12345678901`)
 
 To work with `august-connect` locally, I suggest setting up your variables with [dotenv](https://www.npmjs.com/package/dotenv).
 
@@ -48,7 +48,7 @@ To authorize an `installation`, you must input a six digit code that August will
 - First, assuming your configuration env vars are set, initiate the request for an auth code by calling: `august.authorize()`
 - Then, complete your auth request by adding the six digit code (as a string) as the first param: `august.authorize('123456')`
 
-You should now have a valid session!
+You should now have an authorized `installation`!
 
 > ⚠️ **Warning:** if you change your `AUGUST_INSTALLID`, or don't make use of that installation's session for 120 days, you'll have to repeat the authorization process again.
 
@@ -81,7 +81,7 @@ August.status('7EDFA965E0AE0CE19772AFA435364295', console.log)
 
 #### `august.locks(params[, callback])` → `[Promise]`
 
-Returns **error**, or **object** containing locks that your valid session has access to
+Returns **error**, or **object** containing locks that your valid `installation` has access to
 
 ##### Example
 ```javascript
@@ -174,7 +174,7 @@ const August = require('august-connect')
 - Make sure unit tests pass
 - Integration tests should also pass, but are **not automated**
   - Because we wouldn't want real doors getting locked and unlocked in the real world, integration tests are not part of the automated test suite
-  - To run them, ensure you are using a valid API key¹, and test them against your own hardware with a valid session
+  - To run them, ensure you are using a valid API key¹, set up your local `.env` file, and test against your own hardware with a valid `installation`
 
 ---
 
