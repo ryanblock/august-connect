@@ -1,4 +1,4 @@
-module.exports = function envcheck() {
+module.exports = function envcheck(callback) {
   let errors = []
   let APIkey = process.env.AUGUST_API_KEY
   let installID = process.env.AUGUST_INSTALLID
@@ -16,5 +16,7 @@ module.exports = function envcheck() {
     errors.push(`Missing AUGUST_ID_TYPE env var: must be 'phone' or 'email'`)
   if (!id)
     errors.push(`Missing AUGUST_ID env var`)
-  if (errors.length) throw ReferenceError(`Env errors found:\n${errors.join('\n')}`)
+
+  if (errors.length) callback(ReferenceError(`Env errors found:\n${errors.join('\n')}`))
+  else callback()
 }

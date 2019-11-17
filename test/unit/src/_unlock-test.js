@@ -6,7 +6,7 @@ let lockData = {
   body: {foo: 'bar'},
   headers: {foo: 'bar'}
 }
-let locks = (p, callback) => (callback(null, lockData))
+let locks = callback => (callback(null, lockData))
 let params
 let tiny = {
   put: (p, callback) => {
@@ -21,12 +21,14 @@ let unlock = proxyquire('../../../src/_unlock', {
 })
 
 test('Returns a Promise or uses continuation passing', t => {
-  t.plan(2)
+  t.plan(5)
   let isPromise = unlock() instanceof Promise
-  t.ok(isPromise, 'Promise returned')
-  unlock(null, () => {
-    t.pass('Executed callback')
-  })
+  t.ok(isPromise, 'Promise returned (without params)')
+  isPromise = unlock('foo') instanceof Promise
+  t.ok(isPromise, 'Promise returned (with params)')
+  unlock(() => (t.pass('Executed callback (without params)')))
+  unlock(null, () => (t.pass('Executed callback (null params)')))
+  unlock('foo', () => (t.pass('Executed callback (with params)')))
 })
 
 test('Calls August endpoint with correct params (passed lockID)', t => {

@@ -5,6 +5,11 @@ const tiny = require('tiny-json-http')
 // Lock the lock
 
 module.exports = function status(lockID, callback) {
+  if (!callback && typeof lockID === 'function') {
+    callback = lockID
+    lockID = undefined
+  }
+
   let promise
   if (!callback) {
     promise = new Promise((res, rej) => {
@@ -31,7 +36,7 @@ module.exports = function status(lockID, callback) {
     })
   }
   else {
-    getLocks({}, function pickTheLock(err, response) {
+    getLocks(function pickTheLock(err, response) {
       let {body, headers} = response
       if (err) callback(err)
       else {

@@ -24,6 +24,7 @@
 ### Fixed
 
 - If not using `async/await` / Promises, all methods now use a totally normal, boring errback style
+  - Also includes much cleaner, more consistent implementation of optional param passing to methods
   - Apologies to everyone who suffered through my janky / inconsistent first implementation 🙏🏻
 - All methods now also have cleaner returns
 - Environment check also now looks for `AUGUST_API_KEY`

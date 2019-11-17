@@ -8,6 +8,11 @@ const tiny = require('tiny-json-http')
  * - Session tokens are keyed by installId
  */
 module.exports = function authorize(code, callback) {
+  if (!callback && typeof code === 'function') {
+    callback = code
+    code = undefined
+  }
+
   const identifier = process.env.AUGUST_ID
   const identifierType = process.env.AUGUST_ID_TYPE
 

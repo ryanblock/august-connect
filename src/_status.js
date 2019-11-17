@@ -8,6 +8,11 @@ const tiny = require('tiny-json-http')
  * - If lock isn't specified, gets status for the first lock returned by the API
  */
 module.exports = function status(lockID, callback) {
+  if (!callback && typeof lockID === 'function') {
+    callback = lockID
+    lockID = undefined
+  }
+
   let promise
   if (!callback) {
     promise = new Promise((res, rej) => {
@@ -35,7 +40,7 @@ module.exports = function status(lockID, callback) {
   }
   else {
     // Just pick the first lock
-    getLocks({}, function pickTheLock(err, {body, headers}) {
+    getLocks(function pickTheLock(err, {body, headers}) {
       if (err) callback (err)
       else {
         // TODO maybe enable this method to return status of all locks?

@@ -15,8 +15,10 @@ test('Env is ok', t => {
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  envcheck()
-  t.pass('No errors thrown')
+  envcheck(err => {
+    if (err) t.fail(err)
+    t.pass('No errors thrown')
+  })
 })
 
 test('Missing API key', t => {
@@ -25,7 +27,10 @@ test('Missing API key', t => {
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  t.throws(envcheck)
+  envcheck(err => {
+    if (err) t.ok(err, `Failed with error: ${err}`)
+    else t.fail('No error found')
+  })
   t.end()
 })
 
@@ -35,7 +40,10 @@ test('Missing install ID', t => {
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  t.throws(envcheck)
+  envcheck(err => {
+    if (err) t.ok(err, `Failed with error: ${err}`)
+    else t.fail('No error found')
+  })
   t.end()
 })
 
@@ -45,7 +53,10 @@ test('Missing password', t => {
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  t.throws(envcheck)
+  envcheck(err => {
+    if (err) t.ok(err, `Failed with error: ${err}`)
+    else t.fail('No error found')
+  })
   t.end()
 })
 
@@ -55,7 +66,10 @@ test('Missing ID type', t => {
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  t.throws(envcheck)
+  envcheck(err => {
+    if (err) t.ok(err, `Failed with error: ${err}`)
+    else t.fail('No error found')
+  })
   t.end()
 })
 
@@ -65,7 +79,10 @@ test('Missing ID', t => {
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
-  t.throws(envcheck)
+  envcheck(err => {
+    if (err) t.ok(err, `Failed with error: ${err}`)
+    else t.fail('No error found')
+  })
   t.end()
 })
 
