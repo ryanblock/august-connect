@@ -4,8 +4,9 @@
   "description": "Client module for locking + unlocking August smart locks via August Connect",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint src --ignore-pattern node_modules --fix",
-    "test": "tape test/*.js | tap-spec"
+    "lint": "eslint . --ignore-pattern node_modules --fix",
+    "test": "tape test/unit/**/*-test.js test/unit/**/**/*-test.js | tap-spec",
+    "test:integration": "tape test/integration/**/*-test.js | tap-spec"
   },
   "author": "Ryan Block <hello@ryanblock.com>",
   "license": "Apache-2.0",
@@ -20,13 +21,14 @@
     "url": "https://github.com/ryanblock/august-connect.git"
   },
   "dependencies": {
-    "tiny-json-http": "^7.0.0"
+    "tiny-json-http": "^7.1.2"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
-    "jwt-simple": "^0.5.5",
+    "jwt-simple": "^0.5.6",
+    "proxyquire": "^2.1.3",
     "tap-spec": "^5.0.0",
-    "tape": "^4.10.0"
+    "tape": "^4.11.0"
   }
 }

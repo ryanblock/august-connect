@@ -1,26 +1,13 @@
-let _envcheck = require('./_envcheck')
-let _validate = require('./_validate')
-let _locks = require('./_locks')
-let _status = require('./_status')
-let _lock = require('./_lock')
-let _unlock = require('./_unlock')
-
-_envcheck()
+let validate = require('./_validate')
+let locks = require('./_locks')
+let status = require('./_status')
+let lock = require('./_lock')
+let unlock = require('./_unlock')
 
 module.exports = {
-  validate(code) {
-    _validate(code)
-  },
-  locks(callback) {
-    _locks(callback)
-  },
-  status(lockID, callback) {
-    _status(lockID, callback)
-  },
-  lock(lockID, callback) {
-    _lock(lockID, callback)
-  },
-  unlock(lockID, callback) {
-    _unlock(lockID, callback)
-  },
+  validate,
+  locks,
+  status,
+  lock,
+  unlock
 }
