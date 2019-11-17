@@ -1,0 +1,101 @@
+name: Node CI
+
+# Push tests commits; pull_request tests PR merges
+on: [push, pull_request]
+
+jobs:
+
+  # Test the build
+  build:
+    # Setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+  # Go
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v1
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Env
+      run: |
+        echo "Event name: ${{ github.event_name }}"
+        echo "Git ref:    ${{ github.ref }}"
+        echo "GH actor:   ${{ github.actor }}"
+        echo "SHA:        ${{ github.sha }}"
+        VER=`node --version`; echo "Node ver:   $VER"
+        VER=`npm --version`; echo "npm ver:    $VER"
+
+    - name: Install
+      run: npm install
+
+    - name: Test
+      run: npm test
+      env:
+        CI: true
+        AUGUST_API_KEY: ${{ secrets.AUGUST_API_KEY }}
+
+  # ----- Only git tag testing + package publishing beyond this point ----- #
+
+  # Publish to package registries
+  publish:
+    # Setup
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+
+    # Go
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install
+        run: npm ci
+
+      # Publish to npm
+      - name: Publish @RC to npm
+        if: contains(github.ref, 'RC')
+        run: npm publish --tag RC
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @latest to npm
+        if: contains(github.ref, 'RC') == false #'!contains()'' doesn't work lol
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Set up Node again, this time using GitHub as the publish target
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+          registry-url: https://npm.pkg.github.com/
+
+      # Change package org (@smallwins on GitHub vs @begin on NPM)
+      - name: Change package name
+        run: scripts/change-package-name @smallwins/data
+
+      # Publish to GitHub
+      - name: Publish @RC to GitHub
+        if: contains(github.ref, 'RC')
+        run: npm publish --tag RC
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish @latest to GitHub
+        if: contains(github.ref, 'RC') == false #'!contains()'' doesn't work lol
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
