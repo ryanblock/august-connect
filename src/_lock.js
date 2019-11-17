@@ -25,16 +25,14 @@ module.exports = function status(lockID, callback) {
           headers
         }, function done(err, response) {
           if (err) callback(err)
-          else {
-            let body = response.body
-            callback(null, {body, headers})
-          }
+          else callback(null, response.body)
         })
       }
     })
   }
   else {
-    getLocks(function pickTheLock(err, {body, headers}) {
+    getLocks({}, function pickTheLock(err, response) {
+      let {body, headers} = response
       if (err) callback(err)
       else {
         let locks = Object.keys(body)
@@ -51,10 +49,7 @@ module.exports = function status(lockID, callback) {
             headers
           }, function done(err, response) {
             if (err) callback(err)
-            else {
-              let body = response.body
-              callback(null, {body, headers})
-            }
+            else callback(null, response.body)
           })
         }
       }

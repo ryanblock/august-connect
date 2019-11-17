@@ -2,12 +2,12 @@ const session = require('./util/session')
 const tiny = require('tiny-json-http')
 
 /**
- * Validation
+ * Authorization
  * - User + pass only gets you a session token
  * - Each session token must then be validated
  * - Session tokens are keyed by installId
  */
-module.exports = function validate(code, callback) {
+module.exports = function authorize(code, callback) {
   const identifier = process.env.AUGUST_ID
   const identifierType = process.env.AUGUST_ID_TYPE
 
@@ -64,7 +64,7 @@ module.exports = function validate(code, callback) {
             if (err) callback(err)
             else {
               console.log('Session validated!')
-              callback()
+              callback(null, process.env.AUGUST_INSTALLID)
             }
           })
         }

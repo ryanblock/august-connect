@@ -10,7 +10,7 @@ let tiny = {
     callback()
   }
 }
-let validate = proxyquire('../../../src/_validate', {
+let validate = proxyquire('../../../src/_authorize', {
   './util/session': session,
   'tiny-json-http': tiny
 })

@@ -5,7 +5,8 @@ const tiny = require('tiny-json-http')
  * Get locks
  * - Returns an object containing account's locks
  */
-module.exports = function locks(callback) {
+module.exports = function locks(params={}, callback) {
+  let {internal=true} = params
   let promise
   if (!callback) {
     promise = new Promise((res, rej) => {
@@ -26,8 +27,8 @@ module.exports = function locks(callback) {
       }, function done(err, response) {
         if (err) callback(err)
         else {
-          let body = response.body
-          callback(null, {body, headers})
+          let result = internal ? {body: response.body, headers} : response.body
+          callback(null, result)
         }
       })
     }

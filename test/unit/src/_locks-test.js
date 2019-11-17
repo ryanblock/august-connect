@@ -18,7 +18,7 @@ test('Returns a Promise or uses continuation passing', t => {
   t.plan(2)
   let isPromise = locks() instanceof Promise
   t.ok(isPromise, 'Promise returned')
-  locks(() => {
+  locks({}, () => {
     t.pass('Executed callback')
   })
 })
