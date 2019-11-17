@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint . --ignore-pattern node_modules --fix",
-    "test": "tape test/unit/**/*-test.js test/unit/**/**/*-test.js | tap-spec",
-    "test:integration": "tape test/integration/**/*-test.js | tap-spec"
+    "test": "tape test/unit/**/*-test.js test/unit/**/**/*-test.js | tap-spec"
   },
   "author": "Ryan Block <hello@ryanblock.com>",
   "license": "Apache-2.0",
