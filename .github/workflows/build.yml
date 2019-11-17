@@ -83,6 +83,10 @@ jobs:
           node-version: 10
           registry-url: https://npm.pkg.github.com/
 
+      # Change package org (no scope on GitHub vs @ryanblock on NPM)
+      - name: Change package name
+        run: scripts/change-package-name @ryanblock/august-connect
+
       # Publish to GitHub
       - name: Publish @RC to GitHub
         if: contains(github.ref, 'RC')
