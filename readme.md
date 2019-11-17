@@ -33,15 +33,15 @@ let august = require('august-connect')
 
 ## API
 
-### Validation
+### Authorization
 #### `august.authorize([code][, callback])` → `[Promise]`
 #### ⚠️ Required step!
 
 > Also aliased to `august.validate()`
 
-Returns **error** or, if provided code, **string** of the authorized installation ID
+Returns **error**, or (if provided `code`) **string** of the authorized installation ID
 
-Before you can use `august-connect`, you'll have to authorize an `installation` (i.e. `AUGUST_INSTALLID`, which is just a unique identifier of your choosing, which you will continue to reuse).
+Before you can use `august-connect`, you'll have to authorize an `installation` (i.e. your `AUGUST_INSTALLID`, which is just a unique identifier of your choosing that you'll continue reusing).
 
 To authorize an `installation`, you must input a six digit code that August will send to your `email` or `phone` ID. Here's how:
 
@@ -50,14 +50,14 @@ To authorize an `installation`, you must input a six digit code that August will
 
 You should now have a valid session!
 
-> ⚠️ **Warning:** if you change your `AUGUST_INSTALLID`, or don't make use of the installation's session for 120 days, you'll have to repeat the authorization process again.
+> ⚠️ **Warning:** if you change your `AUGUST_INSTALLID`, or don't make use of that installation's session for 120 days, you'll have to repeat the authorization process again.
 
 
 ### Status / info
 
 #### `august.status([lockID][, callback])` → `[Promise]`
 
-Returns **error** or **object** containing status and diagnostic info of a single lock
+Returns **error**, or **object** containing status and diagnostic info of a single lock
 - If your account only has access to a single lock, you can opt not to specify a `lockID`
 - For reference, lock states:
   - `status.kAugLockState_Locked`: lock is **locked**
@@ -65,7 +65,7 @@ Returns **error** or **object** containing status and diagnostic info of a singl
 
 ##### Example
 ```javascript
-// Check to see if your lock is locked
+// Check your lock's status
 const August = require('august-connect')
 
 August.status('7EDFA965E0AE0CE19772AFA435364295', console.log)
@@ -81,7 +81,7 @@ August.status('7EDFA965E0AE0CE19772AFA435364295', console.log)
 
 #### `august.locks(params[, callback])` → `[Promise]`
 
-Returns **error** or **object** containing locks that your valid session has access to
+Returns **error**, or **object** containing locks that your valid session has access to
 
 ##### Example
 ```javascript
@@ -101,42 +101,18 @@ August.locks({}, console.log)
 ```
 
 
-#### `august.status([lockID][, callback])` → `[Promise]`
-
-Returns **error** or **object** containing `body` (containing ) and `headers` (containing session headers, to be consumed by other methods)
-- If your account only has access to a single lock, you can opt not to specify a `lockID`
-- For reference, lock states:
-  - `status.kAugLockState_Locked`: lock is **locked**
-  - `status.kAugLockState_Unlocked`: lock is **unlocked**
-
-##### Example
-```javascript
-// Check to see if your lock is locked
-const August = require('august-connect')
-
-August.status('7EDFA965E0AE0CE19772AFA435364295', console.log)
-// {
-//   status: 'kAugLockState_Locked',
-//   info: { ... }
-//   retryCount: 1,
-//   totalTime: 1786,
-//   resultsFromOperationCache: false
-// }
-```
-
-
 ### Lock / unlock
 
 #### `august.lock([lockID][, callback])` → `[Promise]`
 
-Returns **error** or **object** containing status and diagnostic info after locking a single lock
+Returns **error**, or **object** containing status and diagnostic info after locking a single lock
 - If your account only has access to a single lock, you can opt not to specify a `lockID`
 - If your account has access multiple locks, **you must specify a lockID**
   - This is to prevent locking the wrong lock, which would be *pretty not good*
 
 ##### Examples
 ```javascript
-// Lock a specific lock, log the results
+// Lock a specific lock
 const August = require('august-connect')
 
 August.lock('7EDFA965E0AE0CE19772AFA435364295', console.log)
@@ -161,14 +137,14 @@ const August = require('august-connect')
 
 #### `august.unlock([lockID][, callback])` → `[Promise]`
 
-Returns **error** or **TKTK** after unlocking a single lock
+Returns **error**, or **object** containing status and diagnostic info after unlocking a single lock
 - If your account only has access to a single lock, you can opt not to specify a `lockID`
 - If your account has access multiple locks, **you must specify a lockID**
   - This is to prevent unlocking the wrong lock, which would be *pretty not good*
 
 ##### Examples
 ```javascript
-// Unlock a specific lock, log the results
+// Unlock a specific lock
 const August = require('august-connect')
 
 August.unlock('7EDFA965E0AE0CE19772AFA435364295', console.log)
@@ -196,10 +172,9 @@ const August = require('august-connect')
 
 - Please fork and submit PRs against `master`
 - Make sure unit tests pass
-- Integration tests should also pass, but are not automated
-  - Ensure you are using a valid API key¹
-  - Run integration tests locally against your own hardware and valid session
+- Integration tests should also pass, but are **not automated**
   - Because we wouldn't want real doors getting locked and unlocked in the real world, integration tests are not part of the automated test suite
+  - To run them, ensure you are using a valid API key¹, and test them against your own hardware with a valid session
 
 ---
 
