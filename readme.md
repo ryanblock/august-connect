@@ -79,7 +79,7 @@ August.status('7EDFA965E0AE0CE19772AFA435364295', console.log)
 ```
 
 
-#### `august.locks(params[, callback])` → `[Promise]`
+#### `august.locks([callback])` → `[Promise]`
 
 Returns **error**, or **object** containing locks that your valid `installation` has access to
 
@@ -88,7 +88,7 @@ Returns **error**, or **object** containing locks that your valid `installation`
 // Check to see if your lock is locked
 const August = require('august-connect')
 
-August.locks({}, console.log)
+August.locks(console.log)
 // {
 //  '7EDFA965E0AE0CE19772AFA435364295': {
 //    LockName: 'Front door',
