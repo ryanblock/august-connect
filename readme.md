@@ -39,9 +39,9 @@ let august = require('august-connect')
 
 > Also aliased to `august.validate()`
 
-Returns **error**, or (if provided `code`) **string** of the authorized installation ID
+Returns **error**, or (if provided `code`) **string** of the authorized installation ID.
 
-Before you can use `august-connect`, you'll have to authorize an `installation` (i.e. your `AUGUST_INSTALLID`, which is just a unique identifier of your choosing that you'll continue reusing).
+Before you can use `august-connect`, you'll have to authorize an `installation` (i.e. your `AUGUST_INSTALLID`, which is just a unique identifier of your choosing that you'll continue reusing). **You only need to authorize an `installation` one time** – you should not attempt continued / ongoing reauthorization attempts.
 
 To authorize an `installation`, you must input a six digit code that August will send to your `email` or `phone` ID. Here's how:
 
