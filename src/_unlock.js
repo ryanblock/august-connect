@@ -37,9 +37,10 @@ module.exports = function status(lockID, callback) {
     })
   }
   else {
-    getLocks(function pickTheLock(err, {body, headers}) {
+    getLocks(function pickTheLock(err, params) {
       if (err) callback(err)
       else {
+        let {body, headers} = params
         let locks = Object.keys(body)
         // Make sure we never, ever lock or unlock the wrong lock
         if (locks.length > 1) {

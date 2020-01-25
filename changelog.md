@@ -2,7 +2,28 @@
 
 ---
 
-## [2.0.0 RC] 2019-11-16
+## [2.0.2] 2019-11-18
+
+### Fixed
+
+- Fixed some destructuring issues in error states
+
+
+### Changed
+
+- Updated dependencies
+
+---
+
+## [2.0.1] 2019-11-18
+
+### Changed
+
+- Updated readme
+
+---
+
+## [2.0.0] 2019-11-16
 
 ### Added
 

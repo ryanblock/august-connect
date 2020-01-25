@@ -40,9 +40,10 @@ module.exports = function status(lockID, callback) {
   }
   else {
     // Just pick the first lock
-    getLocks(function pickTheLock(err, {body, headers}) {
+    getLocks(function pickTheLock(err, params) {
       if (err) callback (err)
       else {
+        let {body, headers} = params
         // TODO maybe enable this method to return status of all locks?
         let locks = Object.keys(body)
         lockID = locks[0]
