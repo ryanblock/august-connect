@@ -2,11 +2,12 @@
 
 ---
 
-## [2.0.2] 2019-11-18
+## [2.0.2 - 2.0.3] 2019-11-18
 
 ### Fixed
 
 - Fixed some destructuring issues in error states
+- Removed unnecessary files from package
 
 
 ### Changed

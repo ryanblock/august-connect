@@ -1,5 +1,7 @@
 .DS_Store
 .env
 .eslintrc.js
-node_modules
-test
+.github/
+node_modules/
+scripts/
+test/
