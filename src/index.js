@@ -1,16 +1,15 @@
 let authorize = require('./_authorize')
-let lock = require('./_lock')
+let lockUnlock = require('./_lock-unlock')
 let _locks = require('./_locks')
 let status = require('./_status')
-let unlock = require('./_unlock')
 
 module.exports = {
   authorize,
-  lock,
+  lock: lockUnlock.bind({}, 'lock'),
   locks: callback => {
     _locks({internal: false}, callback)
   },
   status,
-  unlock,
+  unlock: lockUnlock.bind({}, 'unlock'),
   validate: authorize
 }
