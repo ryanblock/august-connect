@@ -2,6 +2,14 @@
 
 ---
 
+## [2.0.4] 2020-01-26
+
+### Changed
+
+- Internal API changes and DRYing up some methods
+
+---
+
 ## [2.0.2 - 2.0.3] 2019-11-18
 
 ### Fixed
