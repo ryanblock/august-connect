@@ -30,7 +30,7 @@ module.exports = function status(lockID, callback) {
         headers['Content-Length'] = 0 // endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
         tiny.put({
           url,
-          headers,
+          headers
         }, function done(err, response) {
           if (err) callback(err)
           else callback(null, response.body)
@@ -51,7 +51,7 @@ module.exports = function status(lockID, callback) {
         headers['Content-Length'] = 0 // endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
         tiny.put({
           url,
-          headers,
+          headers
         }, function done(err, response) {
           if (err) callback(err)
           else callback(null, response.body)

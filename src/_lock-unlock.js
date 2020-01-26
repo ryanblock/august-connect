@@ -55,7 +55,7 @@ module.exports = function lockUnlock(action='lock', lockID, callback) {
           headers['Content-Length'] = 0 // Endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
           tiny.put({
             url: url(lockID),
-            headers,
+            headers
           }, function done(err, response) {
             if (err) callback(err)
             else callback(null, response.body)

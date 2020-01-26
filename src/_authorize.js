@@ -36,7 +36,7 @@ module.exports = function authorize(code, callback) {
         tiny.post({
           url,
           headers,
-          data,
+          data
         }, function _done(err) {
           if (err) callback(err)
           else {
@@ -64,7 +64,7 @@ module.exports = function authorize(code, callback) {
           tiny.post({
             url,
             headers,
-            data,
+            data
           }, function _done(err) {
             if (err) callback(err)
             else {
