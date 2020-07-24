@@ -2,7 +2,7 @@ let test = require('tape')
 let proxyquire = require('proxyquire')
 let resetEnv = require('../reset-env')
 
-let session = callback => (callback())
+let session = (params, callback) => (callback())
 let params
 let tiny = {
   post: (p, callback) => {
