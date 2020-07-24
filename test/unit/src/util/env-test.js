@@ -1,10 +1,10 @@
 let test = require('tape')
-let envcheck = require('../../../../src/util/envcheck')
+let env = require('../../../../src/util/env')
 let resetEnv = require('../../reset-env')
 
 test('Set up', t => {
   t.plan(1)
-  t.ok(envcheck, 'envcheck is present')
+  t.ok(env, 'env is present')
 })
 
 test('Env is ok', t => {
@@ -15,7 +15,7 @@ test('Env is ok', t => {
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  envcheck(err => {
+  env({}, err => {
     if (err) t.fail(err)
     t.pass('No errors thrown')
   })
@@ -23,67 +23,67 @@ test('Env is ok', t => {
 
 test('Missing API key', t => {
   resetEnv()
+  t.plan(1)
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  envcheck(err => {
+  env({}, err => {
     if (err) t.ok(err, `Failed with error: ${err}`)
     else t.fail('No error found')
   })
-  t.end()
 })
 
 test('Missing install ID', t => {
   resetEnv()
+  t.plan(1)
   process.env.AUGUST_API_KEY = 'AUGUST_API_KEY'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  envcheck(err => {
+  env({}, err => {
     if (err) t.ok(err, `Failed with error: ${err}`)
     else t.fail('No error found')
   })
-  t.end()
 })
 
 test('Missing password', t => {
   resetEnv()
+  t.plan(1)
   process.env.AUGUST_API_KEY = 'AUGUST_API_KEY'
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  envcheck(err => {
+  env({}, err => {
     if (err) t.ok(err, `Failed with error: ${err}`)
     else t.fail('No error found')
   })
-  t.end()
 })
 
 test('Missing ID type', t => {
   resetEnv()
+  t.plan(1)
   process.env.AUGUST_API_KEY = 'AUGUST_API_KEY'
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  envcheck(err => {
+  env({}, err => {
     if (err) t.ok(err, `Failed with error: ${err}`)
     else t.fail('No error found')
   })
-  t.end()
 })
 
 test('Missing ID', t => {
   resetEnv()
+  t.plan(1)
   process.env.AUGUST_API_KEY = 'AUGUST_API_KEY'
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
-  envcheck(err => {
+  env({}, err => {
     if (err) t.ok(err, `Failed with error: ${err}`)
     else t.fail('No error found')
   })
-  t.end()
 })
 
 test('Clean up env', t => {

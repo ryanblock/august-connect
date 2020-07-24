@@ -1,7 +1,7 @@
 let test = require('tape')
 let proxyquire = require('proxyquire')
 
-let session = callback => (callback(null, {headers:{}}))
+let session = (params, callback) => (callback(null, {headers:{}}))
 let params
 let tiny = {
   get: (p, callback) => {

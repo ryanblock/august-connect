@@ -29,7 +29,7 @@ test('Returns headers with session', t => {
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  session((err, result) => {
+  session({}, (err, result) => {
     if (err) t.fail(err)
     t.equal(result['x-august-access-token'], 'foobar', 'Returned headers with x-august-access-token token appended')
   })

@@ -5,14 +5,14 @@ const tiny = require('tiny-json-http')
  * Get locks
  * - Returns an object containing account's locks
  */
-module.exports = function locks(params, callback) {
+module.exports = function locks(params={}, callback) {
   if (!callback && typeof params === 'function') {
     callback = params
     params = {}
   }
   params = params || {}
 
-  let {internal=true} = params
+  let { internal=true } = params
   let promise
   if (!callback) {
     promise = new Promise((res, rej) => {
@@ -22,7 +22,8 @@ module.exports = function locks(params, callback) {
     })
   }
 
-  session(function _locks(err, headers) {
+  session(params,
+  function _locks(err, headers) {
     if (err) callback(err)
     else {
       const url = 'https://api-production.august.com/users/locks/mine'
