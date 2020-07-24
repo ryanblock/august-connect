@@ -1,11 +1,13 @@
-# august-connect
+# [august-connect](https://www.npmjs.com/package/august-connect)
 
 [![GitHub CI status](https://github.com/ryanblock/august-connect/workflows/Node%20CI/badge.svg)](https://github.com/ryanblock/august-connect/actions?query=workflow%3A%22Node+CI%22)
 
 A simple module for locking, unlocking, and getting the status of August smart locks via the [August Connect WiFi bridge](https://august.com/products/august-connect-wifi-bridge/).
 
+---
 
 ## Setup
+
 You'll need:
 
 - A set up & configured August Smart Lock + August Connect WiFi bridge
@@ -16,46 +18,72 @@ You'll need:
 npm i august-connect
 ```
 
-Set up the following **required** configuration environment variables:
+Require `august-connect` in your project:
+```javascript
+let august = require('august-connect')
+```
+
+---
+
+## Configuration
+
+Calls must be made with a configuration set either as environment variables, or passed in the parameters of the method in question.
+
+
+### Environment variables
+
+The following configuration environment variables are **required** if not passing a `config` **object**:
 
 - `AUGUST_API_KEY` - **string** - a valid August API key¹ (please refer notes at the bottom of this readme for more)
-- `AUGUST_INSTALLID` - **string** - referred to as the `installation` below, this string represents your authorized session; changing it will break things and require re-authorization; suggest using something reasonably long, random, and unique
+- `AUGUST_INSTALLID` - **string** - referred to as the "installation" below, this string represents your authorized session; changing it will break things and require re-authorization; suggest using something reasonably long, random, and unique
 - `AUGUST_PASSWORD` - **string** - your August password
 - `AUGUST_ID_TYPE` - **string** - one of `email` or `phone`
 - `AUGUST_ID` - **string** - the corresponding account email or a phone number (phone format is `+[countrycode][number]` with no other symbols, i.e. `+12345678901`)
 
 To work with `august-connect` locally, I suggest setting up your variables with [dotenv](https://www.npmjs.com/package/dotenv).
 
-Require `august-connect` in your project:
-```javascript
-let august = require('august-connect')
-```
+
+### Config objet
+
+The following configuration keys are **required** if not passing the environment variables noted above:
+
+- `apiKey` - - **string** - a valid August API key¹ (please refer notes at the bottom of this readme for more)
+- `installID` - - **string** - referred to as the "installation" below, this string represents your authorized session; changing it will break things and require re-authorization; suggest using something reasonably long, random, and unique
+- `password` - - **string** - your August password
+- `IDType` - - **string** - one of `email` or `phone`
+- `augustID` - - **string** - the corresponding account email or a phone number (phone format is `+[countrycode][number]` with no other symbols, i.e. `+12345678901`)
+
+---
 
 ## API
 
 ### Authorization
-#### `august.authorize([code][, callback])` → `[Promise]`
+#### `august.authorize([params][, callback])` → `[Promise]`
 #### ⚠️ Required step!
 
 > Also aliased to `august.validate()`
 
+If passed, params must be an **object**, and may contain a `code` **string** and `config` **object**.
+
 Returns **error**, or (if provided `code`) **string** of the authorized installation ID.
 
-Before you can use `august-connect`, you'll have to authorize an `installation` (i.e. your `AUGUST_INSTALLID`, which is just a unique identifier of your choosing that you'll continue reusing). **You only need to authorize an `installation` one time** – you should not attempt continued / ongoing reauthorization attempts.
+Before you can use `august-connect`, you'll have to authorize an installation (i.e. your `AUGUST_INSTALLID`, which is just a unique identifier of your choosing that you'll continue reusing). **You only need to authorize an installation one time** – you should not attempt continued / ongoing reauthorization attempts.
 
-To authorize an `installation`, you must input a six digit code that August will send to your `email` or `phone` ID. Here's how:
+To authorize an installation, you must input a six digit code that August will send to your `email` or `phone` ID. Here's how:
 
 - First, assuming your configuration env vars are set, initiate the request for an auth code by calling: `august.authorize()`
 - Then, complete your auth request by adding the six digit code (as a string) as the first param: `august.authorize('123456')`
 
-You should now have an authorized `installation`!
+You should now have an authorized installation!
 
 > ⚠️ **Warning:** if you change your `AUGUST_INSTALLID`, or don't make use of that installation's session for 120 days, you'll have to repeat the authorization process again.
 
 
 ### Status / info
 
-#### `august.status([lockID][, callback])` → `[Promise]`
+#### `august.status([params][, callback])` → `[Promise]`
+
+If passed, params must be an **object**, and may contain a `lockID` **string** and `config` **object**.
 
 Returns **error**, or **object** containing status and diagnostic info of a single lock
 - If your account only has access to a single lock, you can opt not to specify a `lockID`
@@ -79,9 +107,11 @@ August.status('7EDFA965E0AE0CE19772AFA435364295', console.log)
 ```
 
 
-#### `august.locks([callback])` → `[Promise]`
+#### `august.locks([params][, callback])` → `[Promise]`
 
-Returns **error**, or **object** containing locks that your valid `installation` has access to
+If passed, params must be an **object**, and may contain a `config` **object**.
+
+Returns **error**, or **object** containing locks that your valid installation has access to
 
 ##### Example
 ```javascript
@@ -103,7 +133,9 @@ August.locks(console.log)
 
 ### Lock / unlock
 
-#### `august.lock([lockID][, callback])` → `[Promise]`
+#### `august.lock([params][, callback])` → `[Promise]`
+
+If passed, params must be an **object**, and may contain a `lockID` **string** and `config` **object**.
 
 Returns **error**, or **object** containing status and diagnostic info after locking a single lock
 - If your account only has access to a single lock, you can opt not to specify a `lockID`
@@ -135,7 +167,9 @@ const August = require('august-connect')
 ```
 
 
-#### `august.unlock([lockID][, callback])` → `[Promise]`
+#### `august.unlock([params][, callback])` → `[Promise]`
+
+If passed, params must be an **object**, and may contain a `lockID` **string** and `config` **object**.
 
 Returns **error**, or **object** containing status and diagnostic info after unlocking a single lock
 - If your account only has access to a single lock, you can opt not to specify a `lockID`
@@ -174,7 +208,7 @@ const August = require('august-connect')
 - Make sure unit tests pass
 - Integration tests should also pass, but are **not automated**
   - Because we wouldn't want real doors getting locked and unlocked in the real world, integration tests are not part of the automated test suite
-  - To run them, ensure you are using a valid API key¹, set up your local `.env` file, and test against your own hardware with a valid `installation`
+  - To run them, ensure you are using a valid API key¹, set up your local `.env` file, and test against your own hardware with a valid installation
 
 ---
 
