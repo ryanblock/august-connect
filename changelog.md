@@ -13,6 +13,7 @@
 ### Changed
 
 - To support passing configuration as params, method calls are now **objects**; this is a breaking change
+- Removed Node.js 8.x (EOL) from test suite; this module will probably continue working in 8.x for quite some time to come, but it is no longer guaranteed; this is a breaking change
 
 ---
 
