@@ -2,6 +2,20 @@
 
 ---
 
+## [3.0.0]
+
+### Added
+
+- Configuration may now be passed as an object via parameters to all method calls
+  - See readme for documentation on how to pass params
+- Added Node.js 14.x support to testing
+
+### Changed
+
+- To support passing configuration as params, method calls are now **objects**; this is a breaking change
+
+---
+
 ## [2.0.4] 2020-01-26
 
 ### Changed
