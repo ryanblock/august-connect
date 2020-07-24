@@ -43,7 +43,7 @@ The following configuration environment variables are **required** if not passin
 To work with `august-connect` locally, I suggest setting up your variables with [dotenv](https://www.npmjs.com/package/dotenv).
 
 
-### Config objet
+### Config object
 
 The following configuration keys are **required** if not passing the environment variables noted above:
 
