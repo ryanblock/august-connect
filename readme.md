@@ -71,8 +71,8 @@ Before you can use `august-connect`, you'll have to authorize an installation (i
 
 To authorize an installation, you must input a six digit code that August will send to your `email` or `phone` ID. Here's how:
 
-- First, assuming your configuration env vars are set, initiate the request for an auth code by calling: `august.authorize()`
-- Then, complete your auth request by adding the six digit code (as a string) as the first param: `august.authorize('123456')`
+- First, assuming your configuration env vars are set, initiate the request for an auth code by calling: `august.authorize({config: {...})`
+- Then, complete your auth request by adding the six digit code (as a string) as the first param: `august.authorize({code: '123456'})`
 
 You should now have an authorized installation!
 
