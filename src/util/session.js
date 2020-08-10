@@ -24,8 +24,7 @@ module.exports = function AugustAccessTokenRequest(params, callback) {
       }
 
       // August access token request body
-      let data = { installID, password, identifier }
-
+      let data = { installId: installID, password, identifier }
       tiny.post({
         url,
         headers,

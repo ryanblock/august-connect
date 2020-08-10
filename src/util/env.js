@@ -1,12 +1,14 @@
 module.exports = function envcheck(params={}, callback) {
   let { config={} } = params
 
+  let { AUGUST_API_KEY, AUGUST_INSTALLID, AUGUST_PASSWORD, AUGUST_ID_TYPE, AUGUST_ID } = process.env
+
   let errors = []
-  let apiKey =    process.env.AUGUST_API_KEY    || config.apiKey
-  let installID = process.env.AUGUST_INSTALLID  || config.installID
-  let password =  process.env.AUGUST_PASSWORD   || config.password
-  let IDType =    process.env.AUGUST_ID_TYPE    || config.IDType
-  let augustID =  process.env.AUGUST_ID         || config.augustID
+  let apiKey =    AUGUST_API_KEY    || config.apiKey
+  let installID = AUGUST_INSTALLID  || config.installID
+  let password =  AUGUST_PASSWORD   || config.password
+  let IDType =    AUGUST_ID_TYPE    || config.IDType
+  let augustID =  AUGUST_ID         || config.augustID
 
   if (!apiKey)
     errors.push(`Missing config.apiKey or AUGUST_API_KEY env var`)
@@ -19,7 +21,7 @@ module.exports = function envcheck(params={}, callback) {
   if (!augustID)
     errors.push(`Missing config.augustID or AUGUST_ID env var`)
 
-  if (errors.length) callback(ReferenceError(`Env errors found:\n${errors.join('\n')}`))
+  if (errors.length) callback(ReferenceError(`Config errors found:\n${errors.join('\n')}`))
   else {
     let auth = { apiKey, installID, password, IDType, augustID }
     callback(null, auth)

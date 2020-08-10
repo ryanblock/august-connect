@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint . --ignore-pattern node_modules --fix",
     "test": "tape 'test/unit/**/*-test.js' | tap-spec",
+    "test:integration": "tape 'test/integration/**/*-test.js' | tap-spec",
     "rc": "npm version prerelease --preid RC"
   },
   "author": "Ryan Block <hello@ryanblock.com>",
