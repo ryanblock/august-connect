@@ -1,19 +1,18 @@
-const envcheck = require('./envcheck')
+const env = require('./env')
 const tiny = require('tiny-json-http')
 
 // Session
 // - Once validated, August provides JWTs statelessly
 // - To keep this module stateless, we'll fetch the JWT from session with each request
-module.exports = function AugustAccessTokenRequest(callback) {
-  envcheck(function go(err) {
+module.exports = function AugustAccessTokenRequest(params, callback) {
+  env(params,
+  function go(err, auth) {
     if (err) callback(err)
     else {
+      const { apiKey, installID, password, IDType, augustID } = auth
       const url = 'https://api-production.august.com/session'
-      const env = process.env
-      const installId = env.AUGUST_INSTALLID
-      const password = env.AUGUST_PASSWORD
-      const identifier = env.AUGUST_ID_TYPE + ':' + env.AUGUST_ID
-      const AugustAPIKey = env.AUGUST_API_KEY // Same as 'kease' API key ¯\_(ツ)_/¯
+      const identifier = `${IDType}:${augustID}`
+      const AugustAPIKey = apiKey // Same as 'kease' API key ¯\_(ツ)_/¯
 
       // Set up standard headers
       let headers = {
@@ -24,20 +23,29 @@ module.exports = function AugustAccessTokenRequest(callback) {
         'User-Agent': 'August/Luna-3.2.2',
       }
 
-      // August access token request body
-      let data = { installId, password, identifier }
-
-      tiny.post({
-        url,
-        headers,
-        data,
-      }, function _done(err, response) {
-        if (err) callback(err)
-        else {
-          headers['x-august-access-token'] = response.headers['x-august-access-token']
-          callback(null, headers)
-        }
-      })
+      if (params.token) {
+        let { token } = params
+        headers['x-august-access-token'] = token
+        callback(null, { headers, token })
+      }
+      else {
+        // August access token request body
+        let data = { installId: installID, password, identifier }
+        tiny.post({
+          url,
+          headers,
+          data,
+        }, function _done(err, response) {
+          if (err) callback(err)
+          else {
+            headers['x-august-access-token'] = response.headers['x-august-access-token']
+            callback(null, {
+              headers,
+              token: response.headers['x-august-access-token']
+            })
+          }
+        })
+      }
     }
   })
 }

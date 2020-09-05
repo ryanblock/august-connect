@@ -22,18 +22,19 @@ test('Set up', t => {
   t.ok(session, 'session is present')
 })
 
-test('Returns headers with session', t => {
+test('Returns token & headers with session - get a token', t => {
+  t.plan(2)
   resetEnv()
   process.env.AUGUST_API_KEY = 'AUGUST_API_KEY'
   process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
   process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
   process.env.AUGUST_ID_TYPE = 'phone'
   process.env.AUGUST_ID = 'AUGUST_ID'
-  session((err, result) => {
+  session({}, (err, result) => {
     if (err) t.fail(err)
-    t.equal(result['x-august-access-token'], 'foobar', 'Returned headers with x-august-access-token token appended')
+    t.equal(result.headers['x-august-access-token'], 'foobar', 'Returned headers with x-august-access-token token appended')
+    t.equal(result.token, 'foobar', 'Returned reusable August access token')
   })
-  t.end()
 })
 
 test('Posted with required headers', t => {
@@ -43,6 +44,23 @@ test('Posted with required headers', t => {
   t.equal(headers['Content-Type'], 'application/json', 'Posted with correct Content-Type header')
   t.equal(headers['Accept-Version'], '0.0.1', 'Posted with correct Accept-Version header')
   t.equal(headers['User-Agent'], 'August/Luna-3.2.2', 'Posted with correct User-Agent header')
+})
+
+test('Returns token & headers with session - pass a token', t => {
+  t.plan(3)
+  resetEnv()
+  headers = undefined
+  process.env.AUGUST_API_KEY = 'AUGUST_API_KEY'
+  process.env.AUGUST_INSTALLID = 'AUGUST_INSTALLID'
+  process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
+  process.env.AUGUST_ID_TYPE = 'phone'
+  process.env.AUGUST_ID = 'AUGUST_ID'
+  session({ token: 'fizbuz' }, (err, result) => {
+    if (err) t.fail(err)
+    t.equal(result.headers['x-august-access-token'], 'fizbuz', 'Returned headers with x-august-access-token token appended')
+    t.equal(result.token, 'fizbuz', 'Returned reusable August access token')
+    t.notOk(headers, 'Did not post')
+  })
 })
 
 test('Clean up env', t => {

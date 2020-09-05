@@ -2,7 +2,7 @@ let test = require('tape')
 let proxyquire = require('proxyquire')
 let resetEnv = require('../reset-env')
 
-let session = callback => (callback())
+let session = (params, callback) => (callback(null, {}))
 let params
 let tiny = {
   post: (p, callback) => {
@@ -27,8 +27,8 @@ test('Returns a Promise or uses continuation passing', t => {
   isPromise = authorize('foobar') instanceof Promise
   t.ok(isPromise, 'Promise returned (with params)')
   authorize(() => (t.pass('Executed callback (without params)')))
-  authorize(null, () => (t.pass('Executed callback (null params)')))
-  authorize('foobar', () => (t.pass('Executed callback (with params)')))
+  authorize({}, () => (t.pass('Executed callback (empty params)')))
+  authorize({code: 'foobar'}, () => (t.pass('Executed callback (with params)')))
 })
 
 test('Calls August endpoint with correct params (with code)', t => {
@@ -41,7 +41,7 @@ test('Calls August endpoint with correct params (with code)', t => {
 
 test('Invalid code fails', t => {
   t.plan(1)
-  authorize('foo', err => {
+  authorize({ code: 'foo' }, err => {
     t.ok(err, err)
   })
 })

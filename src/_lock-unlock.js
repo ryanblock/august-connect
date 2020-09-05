@@ -5,14 +5,15 @@ const tiny = require('tiny-json-http')
 /**
  * Unlock a lock
  */
-module.exports = function lockUnlock(action='lock', lockID, callback) {
+module.exports = function lockUnlock(action='lock', params={}, callback) {
   if (action !== 'lock' && action !== 'unlock')
-    throw ReferenceError(`Action must either be 'lock' or 'unlock'`)
+  throw ReferenceError(`Action must either be 'lock' or 'unlock'`)
 
-  if (!callback && typeof lockID === 'function') {
-    callback = lockID
-    lockID = undefined
+  if (!callback && typeof params === 'function') {
+    callback = params
+    params = {}
   }
+  let { lockID } = params
 
   let promise
   if (!callback) {
@@ -26,25 +27,34 @@ module.exports = function lockUnlock(action='lock', lockID, callback) {
   let url = lock => `https://api-production.august.com/remoteoperate/${lock}/${action}`
 
   if (lockID) {
-    session(function _status(err, headers) {
+    session(params,
+    function _status(err, result) {
       if (err) callback(err)
       else {
+        let { headers, token } = result
         headers['Content-Length'] = 0 // Endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
         tiny.put({
           url: url(lockID),
           headers
         }, function done(err, response) {
           if (err) callback(err)
-          else callback(null, response.body)
+          else {
+            let result = {
+              ...response.body,
+              token
+            }
+            callback(null, result)
+          }
         })
       }
     })
   }
   else {
-    getLocks(function pickTheLock(err, response) {
+    getLocks(params,
+    function pickTheLock(err, result) {
       if (err) callback(err)
       else {
-        let {body, headers} = response
+        let { body, headers, token } = result
         let locks = Object.keys(body)
         // Make sure we never, ever lock or unlock the wrong lock
         if (locks.length > 1) {
@@ -58,7 +68,13 @@ module.exports = function lockUnlock(action='lock', lockID, callback) {
             headers
           }, function done(err, response) {
             if (err) callback(err)
-            else callback(null, response.body)
+            else {
+              let result = {
+                ...response.body,
+                token
+              }
+              callback(null, result)
+            }
           })
         }
       }

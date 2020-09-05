@@ -1,5 +1,5 @@
 // Test requires access to the internets
-let validate = require('../../../../src/util/session')
+let session = require('../../../../src/util/session')
 let test = require('tape')
 let jwt = require('jwt-simple')
 let isCI = process.env.CI
@@ -12,12 +12,49 @@ process.env.AUGUST_PASSWORD = 'AUGUST_PASSWORD'
 process.env.AUGUST_ID_TYPE = 'phone'
 process.env.AUGUST_ID = 'AUGUST_ID'
 
-test('session integration test', t => {
-  validate((err, result) => {
-    let token = jwt.decode(result['x-august-access-token'], 'foo', true).installId
-    t.equal(token, process.env.AUGUST_INSTALLID, 'Received valid session token from integration test')
-    result['x-august-access-token'] = '***'
-    console.log(err, result)
+let augustToken
+
+test('Session integration test - get a token', t => {
+  t.plan(2)
+  session({}, (err, result) => {
+    if (err) t.fail(err)
+    else {
+      let { headers, token } = result
+      let headerToken = jwt.decode(headers['x-august-access-token'], 'foo', true).installId
+      t.equal(headerToken, process.env.AUGUST_INSTALLID, 'Received valid headers session token from integration test')
+      t.equal(headers['x-august-access-token'], token, 'Received valid session token from integration test')
+      augustToken = token
+      let log = {
+        ...result,
+        headers: {
+          ...headers,
+          'x-august-access-token': '***'
+        },
+        token: '***'
+      }
+      console.log(log)
+    }
   })
-  t.end()
+})
+
+test('Session integration test - pass a token', t => {
+  t.plan(2)
+  session({ token: augustToken }, (err, result) => {
+    if (err) t.fail(err)
+    else {
+      let { headers, token } = result
+      let headerToken = jwt.decode(headers['x-august-access-token'], 'foo', true).installId
+      t.equal(headerToken, process.env.AUGUST_INSTALLID, 'Received valid headers session token from integration test')
+      t.equal(headers['x-august-access-token'], token, 'Received valid session token from integration test')
+      let log = {
+        ...result,
+        headers: {
+          ...headers,
+          'x-august-access-token': '***'
+        },
+        token: '***'
+      }
+      console.log(log)
+    }
+  })
 })

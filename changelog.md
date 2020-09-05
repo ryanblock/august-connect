@@ -2,6 +2,22 @@
 
 ---
 
+## [3.0.0]
+
+### Added
+
+- Configuration may now be passed as an object via parameters to all method calls
+  - See readme for documentation on how to pass params
+- Successful calls now return a `token` parameter, which can be passed back to future calls (on a short-term basis) to speed up transactions and prevent too many token requests
+- Added Node.js 14.x support to testing
+
+### Changed
+
+- To support passing configuration as params, method calls are now **objects**; this is a breaking change
+- Removed Node.js 8.x (EOL) from test suite; this module will probably continue working in 8.x for quite some time to come, but it is no longer guaranteed; this is a breaking change
+
+---
+
 ## [2.0.4] 2020-01-26
 
 ### Changed
