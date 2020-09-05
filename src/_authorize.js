@@ -30,9 +30,10 @@ module.exports = function authorize(params={}, callback) {
       let { installID, IDType, augustID } = auth
       if (!code) {
         // Generate a validation code from the session
-        session(params, function _getValidationCode(err, headers) {
+        session(params, function _getValidationCode(err, result) {
           if (err) callback(err)
           else {
+            let { headers } = result
             // Endpoint used to generate a validation code
             let url = 'https://api-production.august.com/validation/' + IDType
             let data = { value: augustID }
@@ -57,9 +58,10 @@ module.exports = function authorize(params={}, callback) {
         }
         else {
           // Validatate the session
-          session(params, function _validateCode(err, headers) {
+          session(params, function _validateCode(err, result) {
             if (err) callback(err)
             else {
+              let  { headers } = result
               // Endpoint used to validate the token with the code
               let url = 'https://api-production.august.com/validate/' + IDType
               let data = { code }

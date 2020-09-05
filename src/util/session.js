@@ -23,19 +23,29 @@ module.exports = function AugustAccessTokenRequest(params, callback) {
         'User-Agent': 'August/Luna-3.2.2',
       }
 
-      // August access token request body
-      let data = { installId: installID, password, identifier }
-      tiny.post({
-        url,
-        headers,
-        data,
-      }, function _done(err, response) {
-        if (err) callback(err)
-        else {
-          headers['x-august-access-token'] = response.headers['x-august-access-token']
-          callback(null, headers)
-        }
-      })
+      if (params.token) {
+        let { token } = params
+        headers['x-august-access-token'] = token
+        callback(null, { headers, token })
+      }
+      else {
+        // August access token request body
+        let data = { installId: installID, password, identifier }
+        tiny.post({
+          url,
+          headers,
+          data,
+        }, function _done(err, response) {
+          if (err) callback(err)
+          else {
+            headers['x-august-access-token'] = response.headers['x-august-access-token']
+            callback(null, {
+              headers,
+              token: response.headers['x-august-access-token']
+            })
+          }
+        })
+      }
     }
   })
 }

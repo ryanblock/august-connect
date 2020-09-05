@@ -28,16 +28,23 @@ module.exports = function lockUnlock(action='lock', params={}, callback) {
 
   if (lockID) {
     session(params,
-    function _status(err, headers) {
+    function _status(err, result) {
       if (err) callback(err)
       else {
+        let { headers, token } = result
         headers['Content-Length'] = 0 // Endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
         tiny.put({
           url: url(lockID),
           headers
         }, function done(err, response) {
           if (err) callback(err)
-          else callback(null, response.body)
+          else {
+            let result = {
+              ...response.body,
+              token
+            }
+            callback(null, result)
+          }
         })
       }
     })
@@ -47,7 +54,7 @@ module.exports = function lockUnlock(action='lock', params={}, callback) {
     function pickTheLock(err, result) {
       if (err) callback(err)
       else {
-        let { body, headers } = result
+        let { body, headers, token } = result
         let locks = Object.keys(body)
         // Make sure we never, ever lock or unlock the wrong lock
         if (locks.length > 1) {
@@ -61,7 +68,13 @@ module.exports = function lockUnlock(action='lock', params={}, callback) {
             headers
           }, function done(err, response) {
             if (err) callback(err)
-            else callback(null, response.body)
+            else {
+              let result = {
+                ...response.body,
+                token
+              }
+              callback(null, result)
+            }
           })
         }
       }

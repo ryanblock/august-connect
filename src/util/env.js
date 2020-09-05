@@ -4,11 +4,11 @@ module.exports = function envcheck(params={}, callback) {
   let { AUGUST_API_KEY, AUGUST_INSTALLID, AUGUST_PASSWORD, AUGUST_ID_TYPE, AUGUST_ID } = process.env
 
   let errors = []
-  let apiKey =    AUGUST_API_KEY    || config.apiKey
+  let apiKey    = AUGUST_API_KEY    || config.apiKey
   let installID = AUGUST_INSTALLID  || config.installID
-  let password =  AUGUST_PASSWORD   || config.password
-  let IDType =    AUGUST_ID_TYPE    || config.IDType
-  let augustID =  AUGUST_ID         || config.augustID
+  let password  = AUGUST_PASSWORD   || config.password
+  let IDType    = AUGUST_ID_TYPE    || config.IDType
+  let augustID  = AUGUST_ID         || config.augustID
 
   if (!apiKey)
     errors.push(`Missing config.apiKey or AUGUST_API_KEY env var`)

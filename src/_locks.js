@@ -23,10 +23,11 @@ function locks(params={}, callback) {
   }
 
   session(params,
-  function _locks(err, headers) {
+  function _locks(err, result) {
     if (err) callback(err)
     else {
-      const url = 'https://api-production.august.com/users/locks/mine'
+      let { headers, token } = result
+      let url = 'https://api-production.august.com/users/locks/mine'
       headers['Content-Length'] = 0 // endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
       tiny.get({
         url,
@@ -34,7 +35,9 @@ function locks(params={}, callback) {
       }, function done(err, response) {
         if (err) callback(err)
         else {
-          let result = internal ? {body: response.body, headers} : response.body
+          let result = internal
+            ? { body: response.body, headers, token }
+            : { ...response.body, token }
           callback(null, result)
         }
       })

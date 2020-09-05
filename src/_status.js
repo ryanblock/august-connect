@@ -25,9 +25,10 @@ module.exports = function status(params={}, callback) {
 
   if (lockID) {
     session(params,
-    function _status(err, headers) {
+    function _status(err, result) {
       if (err) callback(err)
       else {
+        let { headers, token } = result
         let url = 'https://api-production.august.com/remoteoperate/' + lockID + '/status'
         headers['Content-Length'] = 0 // endpoint requires `Content-length: 0` or it won't hang up ¯\_(ツ)_/¯
         tiny.put({
@@ -35,7 +36,13 @@ module.exports = function status(params={}, callback) {
           headers
         }, function done(err, response) {
           if (err) callback(err)
-          else callback(null, response.body)
+          else {
+            let result = {
+              ...response.body,
+              token
+            }
+            callback(null, result)
+          }
         })
       }
     })
@@ -46,7 +53,7 @@ module.exports = function status(params={}, callback) {
     function pickTheLock(err, result) {
       if (err) callback (err)
       else {
-        let { body, headers } = result
+        let { body, headers, token } = result
         // TODO maybe enable this method to return status of all locks?
         let locks = Object.keys(body)
         lockID = locks[0]
@@ -57,7 +64,13 @@ module.exports = function status(params={}, callback) {
           headers
         }, function done(err, response) {
           if (err) callback(err)
-          else callback(null, response.body)
+          else {
+            let result = {
+              ...response.body,
+              token
+            }
+            callback(null, result)
+          }
         })
       }
     })

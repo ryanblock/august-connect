@@ -31,7 +31,8 @@ test('Returns headers with session', t => {
   process.env.AUGUST_ID = 'AUGUST_ID'
   session({}, (err, result) => {
     if (err) t.fail(err)
-    t.equal(result['x-august-access-token'], 'foobar', 'Returned headers with x-august-access-token token appended')
+    t.equal(result.headers['x-august-access-token'], 'foobar', 'Returned headers with x-august-access-token token appended')
+    t.equal(result.token, 'foobar', 'Returned reusable August access token')
   })
   t.end()
 })
