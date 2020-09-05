@@ -8,6 +8,7 @@
 
 - Configuration may now be passed as an object via parameters to all method calls
   - See readme for documentation on how to pass params
+- Successful calls now return a `token` parameter, which can be passed back to future calls (on a short-term basis) to speed up transactions and prevent too many token requests
 - Added Node.js 14.x support to testing
 
 ### Changed
