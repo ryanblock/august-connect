@@ -1,5 +1,5 @@
-const session = require('august-connect/src/util/session')
-const getLocks = require('august-connect/src/_locks')
+const session = require('./util/session')
+const getLocks = require('./_locks')
 const tiny = require('tiny-json-http')
 
 /**
