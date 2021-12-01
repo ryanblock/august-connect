@@ -1,6 +1,6 @@
-# [august-connect](https://www.npmjs.com/package/august-connect)
+# [august-connect-api](https://www.npmjs.com/package/august-connect-api)
 
-[![GitHub CI status](https://github.com/ryanblock/august-connect/workflows/Node%20CI/badge.svg)](https://github.com/ryanblock/august-connect/actions?query=workflow%3A%22Node+CI%22)
+[![GitHub CI status](https://github.com/techyowl/august-connect-api/workflows/Node%20CI/badge.svg)](https://github.com/techyowl/august-connect-api/actions?query=workflow%3A%22Node+CI%22)
 
 A simple module for locking, unlocking, and getting the status of August smart locks via the [August Connect WiFi bridge](https://august.com/products/august-connect-wifi-bridge/).
 
