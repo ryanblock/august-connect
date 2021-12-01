@@ -1,5 +1,5 @@
 {
-  "name": "august-connect",
+  "name": "august-connect-api",
   "version": "3.0.0",
   "description": "Client module for locking + unlocking August smart locks via August Connect",
   "main": "src/index.js",
@@ -9,7 +9,7 @@
     "test:integration": "tape 'test/integration/**/*-test.js' | tap-spec",
     "rc": "npm version prerelease --preid RC"
   },
-  "author": "Ryan Block <hello@ryanblock.com>",
+  "author": "Blaine Miller <blaine@blaineam.com>",
   "license": "Apache-2.0",
   "keywords": [
     "august",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ryanblock/august-connect.git"
+    "url": "https://github.com/techyowl/august-connect-api.git"
   },
   "dependencies": {
     "tiny-json-http": "^7.2.2"
