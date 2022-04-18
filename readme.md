@@ -45,7 +45,7 @@ To work with `august-connect` locally, I suggest setting up your variables with 
 
 ### Config object
 
-The following configuration keys are **required** if not passing the environment variables noted above:
+The following configuration keys are **required** if not using the environment variables noted above:
 
 - `apiKey` - - **string** - a valid August API key¹ (please refer notes at the bottom of this readme for more)
 - `installID` - - **string** - referred to as the "installation" below, this string represents your authorized session; changing it will break things and require re-authorization; suggest using something reasonably long, random, and unique
@@ -72,13 +72,12 @@ August's API uses short-lived tokens (JWTs); as of version 3.0 `august-connect` 
 
 Before you can use `august-connect`, you'll have to authorize an installation (i.e. your `AUGUST_INSTALLID`, which is just a unique identifier of your choosing that you'll continue reusing). **You only need to authorize an installation one time** – you should not attempt continued / ongoing reauthorization attempts.
 
-If passed, params must be an **object**; this object may contain a `code` **string**, and `config` **object**.
-
-Returns **error**, or (if provided `code`) **string** of the authorized installation ID.
+If passed, params must be an **object**; this object may contain a `code` **string**, and `config` **object**, and it returns the **string** of the authorized installation ID.
 
 To authorize an installation, you must input a six digit code that August will send to your `email` or `phone` ID. Here's how:
 
-- First, assuming your configuration env vars are set, initiate the request for an auth code by calling: `august.authorize({config: {...})`
+- First, assuming your configuration env vars are set, initiate the request for an auth code by calling: `august.authorize()`
+- Alternately, if passing a config object, initiate the request for an auth code by calling: `august.authorize({config: {...})`
 - Then, complete your auth request by adding the six digit code (as a string) as the first param: `august.authorize({code: '123456'})`
 
 You should now have an authorized installation!
@@ -154,7 +153,7 @@ August.locks(console.log)
 //    macAddress: '1A:2B:3C:4D:5E:6F',
 //    HouseID: '097dcab3-a29a-491a-8468-bab41b6b7040',
 //    HouseName: 'Home',
-//    token: 'foobar
+//    token: 'foobar'
 //   }
 // }
 ```
@@ -245,7 +244,7 @@ August.unlock({ lockID: '7EDFA965E0AE0CE19772AFA435364295' }, console.log)
 //   retryCount: 1,
 //   totalTime: 1786,
 //   resultsFromOperationCache: false,
-//   token: 'foobar
+//   token: 'foobar'
 // }
 ```
 

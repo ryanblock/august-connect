@@ -2,6 +2,20 @@
 
 ---
 
+## [4.0.0] 2022-04-18
+
+### Added
+
+- Added `details()` method for getting batter information and other lock status data; thanks @techyowl!
+
+
+### Changed
+
+- Updated dependencies
+- Breaking change: removed Node.js 10.x (EOL) from test suite; this module may continue working in 10.x, but it is no longer guaranteed
+
+---
+
 ## [3.0.0]
 
 ### Added
