@@ -159,7 +159,7 @@ August.locks(console.log)
 // }
 ```
 
-#### `august.details([params][, callback])` → `[Promise]`
+#### `august.battery([params][, callback])` → `[Promise]`
 
 If passed, params must be an **object**, and may contain a `lockID` **string**, `config` **object**, and `token` **string**.
 
@@ -171,7 +171,7 @@ Returns **error**, or **object** containing lock details on a single lock, and a
 // Obtains details on a specific lock
 const August = require('august-connect')
 
-August.details({ lockID: '7EDFA965E0AE0CE19772AFA435364295' }, console.log)
+August.battery({ lockID: '7EDFA965E0AE0CE19772AFA435364295' }, console.log)
 // {
 //   battery: { ... },
 //  ...
@@ -183,7 +183,7 @@ August.details({ lockID: '7EDFA965E0AE0CE19772AFA435364295' }, console.log)
 const August = require('august-connect')
 
 ;(async () => {
-  await August.details()
+  await August.battery()
 })
 ```
 
