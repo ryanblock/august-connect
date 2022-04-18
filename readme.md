@@ -159,6 +159,33 @@ August.locks(console.log)
 // }
 ```
 
+#### `august.details([params][, callback])` → `[Promise]`
+
+If passed, params must be an **object**, and may contain a `lockID` **string**, `config` **object**, and `token` **string**.
+
+Returns **error**, or **object** containing lock details on a single lock, and a reusable [`token`](#tokens)
+- If your account only has access to a single lock, you can opt not to specify a `lockID`
+
+##### Examples
+```javascript
+// Obtains details on a specific lock
+const August = require('august-connect')
+
+August.details({ lockID: '7EDFA965E0AE0CE19772AFA435364295' }, console.log)
+// {
+//   battery: { ... },
+//  ...
+// }
+```
+
+```javascript
+// Assuming your have only one August lock on your account
+const August = require('august-connect')
+
+;(async () => {
+  await August.details()
+})
+```
 
 ### Lock / unlock
 
@@ -230,6 +257,7 @@ const August = require('august-connect')
   await August.unlock()
 })
 ```
+
 
 ---
 
